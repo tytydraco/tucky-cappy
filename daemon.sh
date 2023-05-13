@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Kill background processes when user exits.
+trap 'trap - SIGTERM && kill -- -$$' SIGINT SIGTERM EXIT
+
 if [[ -z "$RTSP_URI" ]]; then
     echo "[E] No RTSP_URI environmental variable set."
     exit 1
@@ -17,9 +20,9 @@ LIVE_SCREENSHOT_FREQ="${LIVE_SCREENSHOT_FREQ:-"5"}"
 # Live screenshot file path.
 LIVE_SCREENSHOT_PATH="${LIVE_SCREENSHOT_PATH:-"live_screenshot.png"}"
 
-mkdir -p "$SEGMENT_DIR"
-
+# Records periodic segments of video.
 periodic_recording() {
+    mkdir -p "$SEGMENT_DIR"
     ffmpeg \
         -hide_banner \
         -y \
@@ -37,6 +40,7 @@ periodic_recording() {
         "$SEGMENT_DIR/%Y-%m-%d+T%H-%M-%S.mkv"
 }
 
+# Updates a single image of a recent camera screenshot.
 live_screenshot() {
     while true; do
         ffmpeg \
