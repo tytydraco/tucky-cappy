@@ -9,13 +9,16 @@ if [[ -z "$RTSP_URI" ]]; then
 fi
 
 # How long each clip is in seconds.
-SEGMENT_SECONDS="${SEGMENT_SECONDS:-"300"}"
+SEGMENT_SECONDS="${SEGMENT_SECONDS:-"3600"}"
+
+# How many segments to keep before overwriting old ones.
+SEGMENTS="${SEGMENTS:-"24"}"
 
 # Where to store video segments.
 SEGMENT_DIR="${SEGMENT_DIR:-"segments/"}"
 
 # How often to update the live screenshot.
-LIVE_SCREENSHOT_FREQ="${LIVE_SCREENSHOT_FREQ:-"5"}"
+LIVE_SCREENSHOT_FREQ="${LIVE_SCREENSHOT_FREQ:-"1"}"
 
 # Live screenshot file path.
 LIVE_SCREENSHOT_PATH="${LIVE_SCREENSHOT_PATH:-"live_screenshot.png"}"
@@ -36,8 +39,9 @@ periodic_recording() {
         -segment_time "$SEGMENT_SECONDS" \
         -segment_format mkv \
         -segment_atclocktime 1 \
+        -segment_wrap "$SEGMENTS" \
         -strftime 1 \
-        "$SEGMENT_DIR/%Y-%m-%d+T%H-%M-%S.mkv"
+        "$SEGMENT_DIR/clip_%03d.mkv"
 }
 
 # Updates a single image of a recent camera screenshot.
