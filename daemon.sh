@@ -62,7 +62,7 @@ live_screenshot() {
     done
 }
 
-periodic_recording &
+#periodic_recording &
 live_screenshot &
 
 wait
