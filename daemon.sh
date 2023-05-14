@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # Kill background processes when user exits.
-trap 'trap - SIGTERM && kill -- -$$' SIGINT SIGTERM EXIT
+trap "exit" INT TERM
+trap "kill 0" EXIT
 
 if [[ -z "$RTSP_URI" ]]; then
     echo "[E] No RTSP_URI environmental variable set."
@@ -63,3 +64,5 @@ live_screenshot() {
 
 periodic_recording &
 live_screenshot &
+
+wait
