@@ -64,5 +64,6 @@ live_screenshot() {
 
 #periodic_recording &
 live_screenshot &
+python -m http.server
 
 wait
