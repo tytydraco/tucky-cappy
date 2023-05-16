@@ -1,9 +1,14 @@
+<!DOCTYPE html>
 <html>
-    <meta http-equiv="refresh" content="1">
-    <head>
+<head>
+  <title>Live Cam</title>
+  <link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet" />
+</head>
+<body>
+  <video-js id="video" autoplay="true" data-setup='{}'>
+    <source src="stream.m3u8" type="application/x-mpegURL">
+  </video-js>
 
-    </head>
-    <body>
-        <img src="live_screenshot.png" alt="Live screenshot" width="800">    
-    </body>
+  <script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
+</body>
 </html>
