@@ -4,7 +4,7 @@ RTSP_URI="rtsp://admin:L25E8A8B@192.168.1.35:554/cam/realmonitor?channel=1&subty
 OUT="stream.m3u8"
 
 # Start web server.
-python -m http.server &
+python -m http.server 1234 &
 
 # Clean up existing clips.
 rm -f "$OUT"
@@ -15,10 +15,7 @@ ffmpeg -i "$RTSP_URI" \
     -y \
     -acodec aac \
     -ac 2 \
-    -tune zerolatency \
-    -preset veryfast \
     -vcodec libx264 \
-    -crf 21 \
     -hls_init_time 1 \
     -hls_time 1 \
     -hls_list_size 60 \
